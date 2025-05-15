@@ -209,9 +209,10 @@ Ich habe diese Konfiguration erstellt, um SSH-Verbindungen zu localhost mit dem 
 Die ~/.ssh/config-Datei speichert vordefinierte Einstellungen für SSH-Verbindungen, die über Aliase aufgerufen werden. Beim Befehl ssh local liest SSH die Datei, erkennt den Host-Eintrag „local“ und nutzt HostName (127.0.0.1), User, Port und IdentityFile für die Verbindung. So ersetzt der Alias lange Befehle wie ssh metin@127.0.0.1 -i ~/.ssh/id_ed25519 und macht die Eingabe effizienter.
 
 Bishierhin geschafft
-```
+
 ---
 ---
+
 
 ### Task 4: SCP File Transfers
 
