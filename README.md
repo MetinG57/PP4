@@ -58,7 +58,47 @@ In this exercise you will:
 # 1) The exact ssh command you ran
 # 2) A detailed, step-by-step explanation of what happened at each stage
 ```
+Task 1
+1) bash
+    ssh -v metin@localhost
+Ich habe diesen Befehl in meinem WSL-Terminal (Ubuntu) ausgeführt. Da ich noch keinen SSH-Schlüssel eingerichtet habe, wurde ich zur Passworteingabe aufgefordert.
+---
+2)
+# SSH Connection to Remote Server – Step-by-Step Explanation
 
+## Step 1. SSH Command Used
+Beim Ausführen des Befehls stellte mein Computer eine Verbindung zu localhost (IP-Adresse 127.0.0.1) auf Port 22 her, dem Standardport für SSH. Dies erfolgt durch einen TCP-Handshake, der aus drei Schritten besteht: SYN, SYN-ACK und ACK. Die Verbindung wurde erfolgreich aufgebaut, wie in der Ausgabe sichtbar:
+debug1: Connecting to localhost [127.0.0.1] port 22.
+debug1: Connection established.
+
+### Step 2: SSH Protocol Handshake
+Client und Server einigten sich auf sichere Algorithmen für Verschlüsselung (z. B. chacha20- poly1305@openssh.com), Schlüsselaustausch (z. B. sntrup761x25519-sha512@openssh.com) und Host-Schlüssel (ssh-ed25519). Der Server sendete seinen Host-Schlüssel, der beim ersten Kontakt akzeptiert wurde, da keine known_hosts-Datei vorhanden war. Anschließend wurde ein gemeinsamer Sitzungsschlüssel zur Verschlüsselung der Kommunikation erzeugt.
+Wichtige Ausgabe:
+debug1: kex: algorithm: sntrup761x25519-sha512@openssh.com
+debug1: kex: host key algorithm: ssh-ed25519
+
+### Step 3: password-based authentication
+Ohne eingerichteten SSH-Schlüssel nutzte ich die Passwort-Authentifizierung:
+Der Server forderte mein Passwort an:
+
+metin@localhost's password:
+Ich gab mein WSL-Benutzerpasswort für metin ein.
+
+Nach Überprüfung des Passworts wurde ich eingeloggt:
+Authenticated to localhost ([127.0.0.1]:22) using "password".
+
+### Step 4: Shell Allocation
+Nach der Authentifizierung öffnete der Server eine Bash-Shell, und ich war als Benutzer metin eingeloggt. Die Eingabeaufforderung lautete:
+
+metin@LAPTOP-621KHKJV:~$
+
+In dieser Shell konnte ich Befehle ausführen.
+
+### Step 5: Exit the Session
+Nach dem Test der Verbindung schloss ich die Sitzung mit:
+exit
+
+---
 ---
 
 ### Task 2: Ed25519 Key Pair
@@ -88,6 +128,21 @@ In this exercise you will:
 # 2) The file paths of the generated keys
 # 3) Your written explanation (3–5 sentences) of the signature process
 ```
+# SSH Key Generation and Signature Process Explanation
+
+## 1. SSH Key Generation Command Used
+1. Verwendeter Befehl
+ssh-keygen -t ed25519 -C "metin@LAPTOP-621KHKJV"
+Ich führte diesen Befehl in meinem WSL-Terminal aus, um ein Ed25519-Schlüsselpaar zu generieren. Ich akzeptierte den Standardpfad (/home/metin/.ssh/id_ed25519) und setzte keine Passphrase, um die Anmeldung zu vereinfachen.
+
+## 2. File Paths of the Generated Keys
+Die Schlüssel wurden wie folgt gespeichert:
+Privater Schlüssel: /home/metin/.ssh/id_ed25519
+Öffentlicher Schlüssel: /home/metin/.ssh/id_ed25519.pub
+
+
+## 3. Signature Process – Written Explanation
+Der private Schlüssel auf meinem Rechner erzeugt eine digitale Signatur für eine Server-Herausforderung. Der öffentliche Schlüssel in ~/.ssh/authorized_keys prüft diese Signatur, um meine Identität zu bestätigen – ganz ohne den privaten Schlüssel preiszugeben. Dieses Verfahren basiert auf asymmetrischer Kryptografie. Ed25519 wird bevorzugt, da es kompakte, schnelle und sehr sichere Schlüssel durch elliptische Kurven bietet, die gegen viele Angriffe resistent sind.
 
 ---
 
@@ -128,7 +183,22 @@ In this exercise you will:
 # 1) The full contents of your ~/.ssh/config
 # 2) A short explanation (3–4 sentences) of how the config simplifies connections
 ```
+# SSH Config File – Simplifying SSH Connections
 
+## 1. Full Contents of `~/.ssh/config`
+
+```ssh-config
+Host local
+    HostName 127.0.0.1
+    User metin
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+Ich habe diese Konfiguration erstellt, um SSH-Verbindungen zu localhost mit dem Alias local zu vereinfachen.
+
+## 2. Explanation – How `~/.ssh/config` Simplifies Connections
+Die ~/.ssh/config-Datei speichert vordefinierte Einstellungen für SSH-Verbindungen, die über Aliase aufgerufen werden. Beim Befehl ssh local liest SSH die Datei, erkennt den Host-Eintrag „local“ und nutzt HostName (127.0.0.1), User, Port und IdentityFile für die Verbindung. So ersetzt der Alias lange Befehle wie ssh metin@127.0.0.1 -i ~/.ssh/id_ed25519 und macht die Eingabe effizienter.
+
+Bishierhin geschafft
 ---
 
 ### Task 4: SCP File Transfers
@@ -216,3 +286,5 @@ In this exercise you will:
 ---
 
 **Remember:** Stop working after **90 minutes** and record where you stopped.
+
+Total used time:92
