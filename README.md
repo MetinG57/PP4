@@ -62,7 +62,7 @@ Task 1
 1) bash
     ssh -v metin@localhost
 Ich habe diesen Befehl in meinem WSL-Terminal (Ubuntu) ausgeführt. Da ich noch keinen SSH-Schlüssel eingerichtet habe, wurde ich zur Passworteingabe aufgefordert.
----
+
 2)
 # SSH Connection to Remote Server – Step-by-Step Explanation
 
