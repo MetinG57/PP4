@@ -58,15 +58,16 @@ In this exercise you will:
 # 1) The exact ssh command you ran
 # 2) A detailed, step-by-step explanation of what happened at each stage
 ```
-Task 1
-1) bash
+## 1. SSH Command Used
+```bash
     ssh -v metin@localhost
-Ich habe diesen Befehl in meinem WSL-Terminal (Ubuntu) ausgeführt. Da ich noch keinen SSH-Schlüssel eingerichtet habe, wurde ich zur Passworteingabe aufgefordert.
+   Ich habe diesen Befehl in meinem WSL-Terminal (Ubuntu) ausgeführt. Da ich noch keinen SSH-Schlüssel eingerichtet habe, wurde ich zur Passworteingabe aufgefordert.
+```
+--- 
 
-2)
-# SSH Connection to Remote Server – Step-by-Step Explanation
+## SSH Connection to Remote Server – Step-by-Step Explanation
 
-## Step 1. SSH Command Used
+### Step 1. SSH Command Used
 Beim Ausführen des Befehls stellte mein Computer eine Verbindung zu localhost (IP-Adresse 127.0.0.1) auf Port 22 her, dem Standardport für SSH. Dies erfolgt durch einen TCP-Handshake, der aus drei Schritten besteht: SYN, SYN-ACK und ACK. Die Verbindung wurde erfolgreich aufgebaut, wie in der Ausgabe sichtbar:
 debug1: Connecting to localhost [127.0.0.1] port 22.
 debug1: Connection established.
@@ -183,9 +184,9 @@ Der private Schlüssel auf meinem Rechner erzeugt eine digitale Signatur für ei
 # 1) The full contents of your ~/.ssh/config
 # 2) A short explanation (3–4 sentences) of how the config simplifies connections
 ```
-# SSH Config File – Simplifying SSH Connections
+## SSH Config File – Simplifying SSH Connections
 
-## 1. Full Contents of `~/.ssh/config`
+### 1. Full Contents of `~/.ssh/config`
 
 ```ssh-config
 Host local
@@ -195,7 +196,7 @@ Host local
     IdentityFile ~/.ssh/id_ed25519
 Ich habe diese Konfiguration erstellt, um SSH-Verbindungen zu localhost mit dem Alias local zu vereinfachen.
 
-## 2. Explanation – How `~/.ssh/config` Simplifies Connections
+### 2. Explanation – How `~/.ssh/config` Simplifies Connections
 Die ~/.ssh/config-Datei speichert vordefinierte Einstellungen für SSH-Verbindungen, die über Aliase aufgerufen werden. Beim Befehl ssh local liest SSH die Datei, erkennt den Host-Eintrag „local“ und nutzt HostName (127.0.0.1), User, Port und IdentityFile für die Verbindung. So ersetzt der Alias lange Befehle wie ssh metin@127.0.0.1 -i ~/.ssh/id_ed25519 und macht die Eingabe effizienter.
 
 Bishierhin geschafft
